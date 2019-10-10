@@ -1,0 +1,107 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    font-family: 'Lusitana', serif;
+    background-color: #649FE1;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 50px;
+
+    overflow: hidden;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 5px 2px rgba(34,99,205, .5);
+}
+
+/* Head */
+.app-title {
+    display: flex;
+    justify-content: center;
+    height: 160px;
+
+    font-size: 1.8rem;
+    font-weight: 400;
+    
+    color: #fff;
+    background-color: #64D8FC;
+    border-bottom: 1px solid #57BCDB;
+}
+.notification {
+    position: absolute;
+    top: 65px;
+    left: 10px;
+    right: 10px;
+    z-index: 20;
+
+    display: none;
+    padding: .8rem 0;
+    
+    text-align: center;
+    color: #fff;
+    background-color: #ED785E;
+
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0, .2);
+}
+.notification.show {
+    display: block;
+}
+
+/* Body */
+.weather-container {
+    position: relative;
+    
+    text-align: center;
+    /* Push main content at 70px bottom*/
+    padding-top: 70px;
+    padding-bottom: 40px;
+
+    color: #649FE1;
+}
+.weather-icon {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    z-index: 10;
+    
+    width: 100px;
+    height: 100px;
+
+    background-color: #fff;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 8px rgba(34,99,205, .2);
+}
+.weather-icon img {
+    width: 95px;
+    height: auto;
+}
+
+.temperature-value p,
+.temperature-description p,
+.location p {
+    margin: 0;
+}
+
+.temperature-value p {
+    font-size: 4.5rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+.temperature-value span {
+    font-size: 2rem;
+}
+
+.temperature-description p {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
