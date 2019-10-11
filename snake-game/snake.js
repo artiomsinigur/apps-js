@@ -11,14 +11,17 @@ let box = 32; // 32px is one unit(square)
     // Gound area has 17 box on X and 15 box on Y
     // Where X left side has one free unit and Y top side has 3 free units
 
-// Load images and audio 
+// Load images
 let imgFood = new Image();
 imgFood.src = "img/food.png";
 let imgGround = new Image();
 imgGround.src = "img/ground.png";
 
-let audioName = new Audio();
-audioName.src = "audio/audio.mp3";
+// Load audios 
+let audioDead = new Audio();
+audioDead.src = "audio/dead.mp3";
+let audioEat = new Audio();
+audioEat.src = "audio/eat.mp3";
 
 // Move snake
 let snake = [];
@@ -101,7 +104,7 @@ function draw() {
         // 3. Add new head without delete one snake.pop()
     if (snakeHeadX == food.x && snakeHeadY == food.y) {
         score++;
-        ctx.drawImage(imgFood, food.x, food.y);
+        audioEat.play();
         food = {
             x: Math.floor(Math.random() * 17 + 1) * box,
             y: Math.floor(Math.random() * 15 + 3) * box,
@@ -116,6 +119,7 @@ function draw() {
         // 1. If snake hits him self
         // 2. If snake hits the wall
     if (collisionHimSelf( newHead, snake ) || collisionWall( newHead )) {
+        audioDead.play();
         clearInterval(game);
     }
     
