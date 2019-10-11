@@ -22,7 +22,7 @@ audioName.src = "audio/audio.mp3";
 
 // Move snake
 let snake = [];
-    snake[0] = {x: 9*box, y: 10*box};
+snake[0] = {x: 9*box, y: 10*box};
 
 // Place food randomly
 let food = {
@@ -32,7 +32,7 @@ let food = {
 let score = 0;
 
 
-// Controle the snake
+// Controle the snake and get the code of key arrows
 let d;
 document.addEventListener("keydown", direction);
 function direction( e ) {
@@ -46,7 +46,6 @@ function direction( e ) {
         d = "DOWN";
     }
 }
-
 
 /**
  * Draw the snake
@@ -70,7 +69,6 @@ function draw() {
     ctx.font = "34px Arial";
     ctx.fillText(score, 2*box, 1.6*box);
 
-
     // General rules. How snake move.
         // 1. Remove tail (snake.pop())
         // 2. Add new head (snake.unshift(3))
@@ -79,7 +77,6 @@ function draw() {
     // Get old head postion
     let snakeHeadX = snake[0].x;
     let snakeHeadY = snake[0].y;
-    
 
     // Check the direction
     // If snake moves on the left 
@@ -91,19 +88,63 @@ function draw() {
     // If snake moves on the bottom 
     if (d == "DOWN") snakeHeadY += box;
 
-
-    // Delete snake tail
-    snake.pop();
-
-
-
     // Add new head
     let newHead = {
         x:snakeHeadX,
         y:snakeHeadY
     };
 
+    // When snake eats food
+    // If snake head is in the same position of the food
+        // 1. Increment the score
+        // 2. Generate new random food
+        // 3. Add new head without delete one snake.pop()
+    if (snakeHeadX == food.x && snakeHeadY == food.y) {
+        score++;
+        ctx.drawImage(imgFood, food.x, food.y);
+        food = {
+            x: Math.floor(Math.random() * 17 + 1) * box,
+            y: Math.floor(Math.random() * 15 + 3) * box,
+        };
+        // When snake eats, don't remove the tail
+    } else {
+        // Remove the tail
+        snake.pop();
+    }
+
+    // Game over
+        // 1. If snake hits him self
+        // 2. If snake hits the wall
+    if (collisionHimSelf( newHead, snake ) || collisionWall( newHead )) {
+        clearInterval(game);
+    }
+    
+    // Add new head
     snake.unshift(newHead);
 }
 let game = setInterval(draw, 100);
 
+
+/**
+ * Check if snake hits him self
+ */
+function collisionHimSelf( head, arrSnake ) {
+    for (let i = 0; i < arrSnake.length; i++) {
+        if (head.x == arrSnake[i].x && head.y == arrSnake[i].y) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+/**
+ * Check if snake hits a wall 
+ */
+function collisionWall( head ) {
+    if (head.x < box || head.y < 3*box || head.x > 17*box || head.y > 17*box) {
+        return true; 
+    } else {
+        return false;
+    }
+}
